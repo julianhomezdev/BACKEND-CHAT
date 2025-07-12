@@ -1,0 +1,6 @@
+@WikiAll_HostAddress = http://localhost:5174
+
+GET {{WikiAll_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
