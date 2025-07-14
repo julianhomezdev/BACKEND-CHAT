@@ -1,5 +1,5 @@
+using ChatAll.Infraestructure.DbData;
 using Microsoft.EntityFrameworkCore;
-using WikiAll.Context.DbData;
 
 var builder = WebApplication.CreateBuilder(args);
 

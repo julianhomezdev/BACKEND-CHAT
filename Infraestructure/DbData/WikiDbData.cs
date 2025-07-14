@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WikiAll.Models;
+﻿using ChatAll.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace WikiAll.Context.DbData
+namespace ChatAll.Infraestructure.DbData
 {
     public class WikiDbData : DbContext
     {

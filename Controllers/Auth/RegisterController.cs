@@ -83,7 +83,7 @@ namespace ChatAll.Controllers.Auth
                         phone = createdUser.Phone
                     },
 
-                    token = token
+                    _token = token
 
                 });
 
