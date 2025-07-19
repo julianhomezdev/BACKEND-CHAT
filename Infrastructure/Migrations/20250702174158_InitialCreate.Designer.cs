@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace WikiAll.Migrations
 {
-    [DbContext(typeof(WikiDbData))]
+    [DbContext(typeof(ChatDb))]
     [Migration("20250702174158_InitialCreate")]
     partial class InitialCreate
     {

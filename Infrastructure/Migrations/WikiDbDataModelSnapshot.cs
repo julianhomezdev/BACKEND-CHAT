@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace WikiAll.Migrations
 {
-    [DbContext(typeof(WikiDbData))]
+    [DbContext(typeof(ChatDb))]
     partial class WikiDbDataModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

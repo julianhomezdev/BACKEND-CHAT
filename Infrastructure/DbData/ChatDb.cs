@@ -1,11 +1,12 @@
 ﻿using ChatAll.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using WikiAll.Models;
 
 namespace ChatAll.Infraestructure.DbData
 {
-    public class WikiDbData : DbContext
+    public class ChatDb : DbContext
     {
-        public WikiDbData(DbContextOptions<WikiDbData> options) : base(options)
+        public ChatDb(DbContextOptions<ChatDb> options) : base(options)
         {
         }
 
@@ -15,12 +16,6 @@ namespace ChatAll.Infraestructure.DbData
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-
-            // Unique index
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Username)
-                .IsUnique();
 
             // Unique email
             modelBuilder.Entity<User>()

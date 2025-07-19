@@ -1,4 +1,6 @@
+using ChatAll.Application.Interfaces;
 using ChatAll.Infraestructure.DbData;
+using ChatAll.Infraestructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +13,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configure entity framework with Sql Server
-builder.Services.AddDbContext<WikiDbData>(options =>
+builder.Services.AddDbContext<ChatDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
     

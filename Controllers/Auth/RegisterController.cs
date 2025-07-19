@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ChatAll.Application.Dtos;
+using ChatAll.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using WikiAll.Models;
 
 namespace ChatAll.Controllers.Auth
 {
@@ -8,7 +11,7 @@ namespace ChatAll.Controllers.Auth
     public class RegisterController : ControllerBase
     {
         // The nomenclature with i means that it is an interface
-        private readonly IUserService userService;
+        private readonly IUserService _userService;
 
         // The logger is a function that provides me with a log of debug
         private readonly ILogger<RegisterController> _logger;
@@ -59,12 +62,12 @@ namespace ChatAll.Controllers.Auth
                     LastName = request.LastName,
                     Email = request.Email,
                     Phone = request.Phone,
-                    CreaedAt = DateTime.UtcNow,
+                    CreatedAt = DateTime.UtcNow,
                     IsActive = true
 
                 };
 
-                var createdUser = Await _userService.CreateAsync(user, request.Password);
+                var createdUser = await _userService.CreateAsync(user, request.Password);
 
 
                 // Generate the JWT token
@@ -76,7 +79,7 @@ namespace ChatAll.Controllers.Auth
                     message = "User created succesfully",
                     user = new
                     {
-                        id = createdUser.Id,
+                        
                         firstName = createdUser.FirstName,
                         lastName = createdUser.LastName,
                         email = createdUser.Email,
