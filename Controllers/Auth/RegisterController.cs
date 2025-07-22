@@ -1,7 +1,7 @@
 ﻿using ChatAll.Application.Dtos;
 using ChatAll.Application.Interfaces;
+using ChatAll.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using WikiAll.Models;
 
 namespace ChatAll.Controllers.Auth
 {

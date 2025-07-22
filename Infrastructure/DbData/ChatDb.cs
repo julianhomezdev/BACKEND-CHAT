@@ -1,6 +1,6 @@
-﻿using ChatAll.Domain.Models;
+﻿using ChatAll.Domain.Entities;
+using ChatAll.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using WikiAll.Models;
 
 namespace ChatAll.Infraestructure.DbData
 {

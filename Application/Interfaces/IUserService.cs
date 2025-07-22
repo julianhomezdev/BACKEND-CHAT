@@ -1,4 +1,4 @@
-﻿using WikiAll.Models;
+﻿using ChatAll.Domain.Entities;
 
 namespace ChatAll.Application.Interfaces
 {
