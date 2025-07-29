@@ -3,7 +3,30 @@ using ChatAll.Infraestructure.DbData;
 using ChatAll.Infraestructure.Services;
 using Microsoft.EntityFrameworkCore;
 
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Cors configuration
+builder.Services.AddCors(options =>
+{
+
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                        policy =>
+                        {
+
+                            policy.WithOrigins("http://localhost:5173", "http://localhost:5173/auth/register");
+                            policy.AllowAnyMethod();
+                            policy.AllowAnyHeader();
+                            policy.AllowCredentials();
+
+
+                        });
+
+});
+
 
 // Add services to the container.
 
@@ -28,6 +51,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
