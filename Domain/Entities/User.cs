@@ -31,7 +31,8 @@ namespace ChatAll.Domain.Entities
         public string LastName { get; set; }
 
         [Required]
-        public int Phone { get; set; }
+        [StringLength(100)]
+        public string Phone { get; set; }
 
         [Required]
         public bool IsActive { get; set; } = true;
