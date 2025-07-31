@@ -68,6 +68,7 @@ namespace ChatAll.Controllers.Auth
 
                 // Create the User object
                 var user = new User
+
                 {
                     FirstName = request.FirstName,
                     LastName = request.LastName,
