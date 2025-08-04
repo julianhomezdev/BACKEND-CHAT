@@ -16,15 +16,18 @@ namespace ChatAll.Controllers.Auth
         // The nomenclature with i means that it is an interface
         private readonly IUserService _userService;
 
+        private readonly IEmailService _emailService;
+
         // The logger is a function that provides me with a log of debug
         private readonly ILogger<RegisterController> _logger;
 
 
-        public RegisterController(IUserService userService, ILogger<RegisterController> logger)
+        public RegisterController(IUserService userService, IEmailService emailService, ILogger<RegisterController> logger)
         {
 
             // The _ indicates that it is private
             _userService = userService;
+            _emailService = emailService;
             _logger = logger;
 
 
@@ -83,6 +86,16 @@ namespace ChatAll.Controllers.Auth
                 // Generate the JWT token
                 var token = _userService.GenerateJwtToken(createdUser);
 
+                // Generate the random code for email verification
+                string verificationCode = _emailService.GenerateRandomCode();
+
+                // Send the verification email
+                bool emailSent = await _emailService.SendEmailAsync(
+                    createdUser.Email,
+                    "Email Verification",
+                    $"Your verification code is: {verificationCode}"
+                );
+
                 return Ok(new
                 {
 
@@ -99,6 +112,8 @@ namespace ChatAll.Controllers.Auth
                     _token = token
 
                 });
+
+                
 
             }
 

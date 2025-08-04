@@ -8,6 +8,6 @@
         // Async to send a email to verify the email address
         Task <bool>SendEmailAsync( string to, string subject, string body);
 
-        Task<int> GenerateRandomCode();
+        public string GenerateRandomCode();
     }
 }

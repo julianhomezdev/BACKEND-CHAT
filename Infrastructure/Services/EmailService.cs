@@ -56,5 +56,25 @@ namespace ChatAll.Infrastructure.Services
                 return false;
             }
         }
+
+        public string GenerateRandomCode()
+        {
+            var seed = Environment.TickCount;
+            var random = new Random(seed);
+
+
+            string randomCode = "";
+
+            for (int i = 0; i < 4; i++)
+            {
+                // Generare a random number
+                var value = random.Next(0, 10);
+
+                // Append the number to form the code
+                randomCode += value.ToString();
+            }
+
+            return randomCode;
+        }   
     }
 }
