@@ -20,8 +20,6 @@ namespace ChatAll.Controllers.Auth
         private readonly ILogger<RegisterController> _logger;
 
 
-
-
         public RegisterController(IUserService userService, ILogger<RegisterController> logger)
         {
 

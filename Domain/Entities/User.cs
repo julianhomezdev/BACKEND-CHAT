@@ -39,6 +39,10 @@ namespace ChatAll.Domain.Entities
 
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        
+
+        // Last 4 digit code for email verification
+        public int LastCode { get; set; } = 0;
+
+
     }
 }

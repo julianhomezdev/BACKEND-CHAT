@@ -1,6 +1,8 @@
 using ChatAll.Application.Interfaces;
+using ChatAll.Domain.Entities;
 using ChatAll.Infraestructure.DbData;
 using ChatAll.Infraestructure.Services;
+using ChatAll.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -40,6 +42,12 @@ builder.Services.AddDbContext<ChatDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
+
+// Configure email service
+builder.Services.Configure<Email>(
+    builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 var app = builder.Build();
     

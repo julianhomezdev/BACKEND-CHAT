@@ -6,6 +6,8 @@
     {
 
         // Async to send a email to verify the email address
-        Task SendEmailAsync( string to, string subject, string body);
+        Task <bool>SendEmailAsync( string to, string subject, string body);
+
+        Task<int> GenerateRandomCode();
     }
 }
