@@ -2,6 +2,7 @@
 using ChatAll.Domain.Entities;
 using ChatAll.Infraestructure.DbData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace ChatAll.Infraestructure.Services
 {
@@ -35,6 +36,23 @@ namespace ChatAll.Infraestructure.Services
         public async Task<User> GetEmailAsync(string email)
         {
            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<User> updateVerificationCode(int code, string email)
+        {
+
+            var userToUpdate = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (userToUpdate != null)
+            {
+                userToUpdate.LastCode = code;
+                _context.Users.Update(userToUpdate);
+                await _context.SaveChangesAsync();
+
+            }
+
+
+            return userToUpdate;
         }
     }
 }
