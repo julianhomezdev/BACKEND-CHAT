@@ -45,7 +45,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // Configure email service
 builder.Services.Configure<Email>(
-    builder.Configuration.GetSection("EmailSettings"));
+    builder.Configuration.GetSection("Email"));
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 

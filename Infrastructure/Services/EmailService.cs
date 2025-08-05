@@ -1,56 +1,59 @@
 ﻿using ChatAll.Application.Interfaces;
-using ChatAll.Domain.Entities;
 using System.Net;
 using System.Net.Mail;
-using Microsoft.Extensions.Options;
-
 
 namespace ChatAll.Infrastructure.Services
 {
-    // Implements the IEmailService interface
     public class EmailService : IEmailService
     {
-
-        private readonly Email _email;
         private readonly ILogger<EmailService> _logger;
+        private readonly IConfiguration _configuration;
 
-       
-        public EmailService(IOptions<Email> email, ILogger<EmailService> logger)
+        public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
-            _email = email.Value;
+            _configuration = configuration;
             _logger = logger;
         }
 
         public async Task<bool> SendEmailAsync(string to, string subject, string body)
         {
-
             try
             {
-                using var client = new SmtpClient(_email.SmtpServer, _email.SmtpPort)
+                var smtpServer = _configuration["Email:SmtpServer"];
+                var smtpPortString = _configuration["Email:Port"];
+                var username = _configuration["Email:Username"];
+                var password = _configuration["Email:Password"];
+                var fromEmail = _configuration["Email:FromEmail"];
+
+                if (!int.TryParse(smtpPortString, out int smtpPort))
                 {
-                    Credentials = new NetworkCredential(_email.Usermame, _email.Password),
+                    _logger.LogError("Invalid SMTP Port in configuration: {Port}", smtpPortString);
+                    return false;
+                }
+
+                
+
+                using var client = new SmtpClient(smtpServer, smtpPort) 
+                {
+                    UseDefaultCredentials = false, 
+                    Credentials = new NetworkCredential(username, password),
                     EnableSsl = true
                 };
 
-
                 using var message = new MailMessage
                 {
-                    From = new MailAddress(_email.FromEmail),
+                    From = new MailAddress(fromEmail),
                     Subject = subject,
                     Body = body,
                     IsBodyHtml = false
                 };
 
                 message.To.Add(to);
-
-
                 await client.SendMailAsync(message);
-
                 _logger.LogInformation("Email sent successfully to {To}", to);
                 return true;
             }
-
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to send email to {To}", to);
                 return false;
@@ -75,6 +78,7 @@ namespace ChatAll.Infrastructure.Services
             }
 
             return randomCode;
-        }   
+        }
     }
 }
+    

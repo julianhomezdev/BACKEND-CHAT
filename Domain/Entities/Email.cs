@@ -5,9 +5,9 @@
 
         public string SmtpServer { get; set; } = string.Empty;
 
-        public int SmtpPort { get; set; }
+        public int Port { get; set; }
 
-        public string Usermame { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
 
         public string Password { get; set; } = string.Empty;
 
