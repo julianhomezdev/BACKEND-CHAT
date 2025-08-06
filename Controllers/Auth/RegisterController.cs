@@ -96,6 +96,9 @@ namespace ChatAll.Controllers.Auth
                     $"Your verification code is: {verificationCode}"
                 );
 
+                // Update the verification code in the database
+                User userUpdated = _userService.updateVerificationCode(int.Parse(verificationCode), createdUser.Email).Result;
+
                 return Ok(new
                 {
 

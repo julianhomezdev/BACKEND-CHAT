@@ -11,5 +11,8 @@ namespace ChatAll.Application.Interfaces
         Task<User> CreateAsync(User user, string password);
         Task<User> GetEmailAsync(string email);
         string GenerateJwtToken(User user);
+
+        // Update the verification code for a user identified by email
+        Task<User> updateVerificationCode(int code, string email);
     }
 }

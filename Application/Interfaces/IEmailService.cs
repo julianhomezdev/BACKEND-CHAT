@@ -1,4 +1,6 @@
-﻿namespace ChatAll.Application.Interfaces
+﻿using ChatAll.Domain.Entities;
+
+namespace ChatAll.Application.Interfaces
 {
 
     // Defines what the email service should do but not how it should do it
@@ -9,5 +11,7 @@
         Task <bool>SendEmailAsync( string to, string subject, string body);
 
         public string GenerateRandomCode();
+
+    
     }
 }

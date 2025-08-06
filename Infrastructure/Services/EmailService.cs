@@ -1,4 +1,5 @@
 ﻿using ChatAll.Application.Interfaces;
+using ChatAll.Domain.Entities;
 using System.Net;
 using System.Net.Mail;
 
@@ -31,11 +32,11 @@ namespace ChatAll.Infrastructure.Services
                     return false;
                 }
 
-                
 
-                using var client = new SmtpClient(smtpServer, smtpPort) 
+
+                using var client = new SmtpClient(smtpServer, smtpPort)
                 {
-                    UseDefaultCredentials = false, 
+                    UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(username, password),
                     EnableSsl = true
                 };
@@ -51,6 +52,7 @@ namespace ChatAll.Infrastructure.Services
                 message.To.Add(to);
                 await client.SendMailAsync(message);
                 _logger.LogInformation("Email sent successfully to {To}", to);
+
                 return true;
             }
             catch (Exception ex)
@@ -79,6 +81,9 @@ namespace ChatAll.Infrastructure.Services
 
             return randomCode;
         }
+
+
     }
+
 }
     
