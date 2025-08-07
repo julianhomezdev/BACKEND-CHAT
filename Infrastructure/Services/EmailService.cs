@@ -1,5 +1,6 @@
 ﻿using ChatAll.Application.Interfaces;
 using ChatAll.Domain.Entities;
+using ChatAll.Infraestructure.DbData;
 using System.Net;
 using System.Net.Mail;
 
@@ -9,6 +10,8 @@ namespace ChatAll.Infrastructure.Services
     {
         private readonly ILogger<EmailService> _logger;
         private readonly IConfiguration _configuration;
+
+       
 
         public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
@@ -81,6 +84,10 @@ namespace ChatAll.Infrastructure.Services
 
             return randomCode;
         }
+
+
+
+        
 
 
     }

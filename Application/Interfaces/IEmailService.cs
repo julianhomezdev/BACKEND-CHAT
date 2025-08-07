@@ -12,6 +12,6 @@ namespace ChatAll.Application.Interfaces
 
         public string GenerateRandomCode();
 
-    
+       
     }
 }
