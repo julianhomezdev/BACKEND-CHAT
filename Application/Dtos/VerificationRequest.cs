@@ -4,6 +4,7 @@
     {
 
         public int LastCode { get; set; }
+        public string Email { get; set; }
 
     }
 }

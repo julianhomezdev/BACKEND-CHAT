@@ -54,5 +54,16 @@ namespace ChatAll.Infraestructure.Services
 
             return userToUpdate;
         }
+
+
+        public async Task<bool> VerifyCodeAsync(int code, string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user != null && user.LastCode == code)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

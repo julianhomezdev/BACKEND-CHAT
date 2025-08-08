@@ -14,5 +14,8 @@ namespace ChatAll.Application.Interfaces
 
         // Update the verification code for a user identified by email
         Task<User> updateVerificationCode(int code, string email);
+
+        // Verify the verification code
+        Task<bool> VerifyCodeAsync(int code, string email); 
     }
 }
