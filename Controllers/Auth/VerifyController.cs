@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChatAll.Controllers.Auth
 {
-
-    [Route("api/[controller]")]
+    [ApiController]
+    [Route("[controller]")]
     public class VerifyController : ControllerBase
     {
 
@@ -16,6 +16,8 @@ namespace ChatAll.Controllers.Auth
         private readonly ILogger<VerifyController> _logger;
 
 
+
+
         public VerifyController(IUserService userService, ILogger<VerifyController> logger)
         {
             // The _ indicates that it is private
@@ -24,7 +26,17 @@ namespace ChatAll.Controllers.Auth
         }
 
 
-        [HttpPost("verify")]
+        /// <summary>
+        /// Verifies the provided code for a user's email address.
+        /// </summary>
+        /// <remarks>This method expects a valid <see cref="VerificationRequest"/> object in the request
+        /// body.  Ensure that the <c>LastCode</c> and <c>Email</c> properties are correctly populated.</remarks>
+        /// <param name="dto">The verification request containing the code to verify and the associated email address.</param>
+        /// <returns>An <see cref="IActionResult"/> indicating the result of the verification.  Returns <see
+        /// cref="OkObjectResult"/> with a success message if the code is valid;  otherwise, returns <see
+        /// cref="BadRequestObjectResult"/> with an error message.</returns>
+
+        [HttpPost]
         public async Task<IActionResult> VerifyCode([FromBody] VerificationRequest dto)
         {
             var result = await _userService.VerifyCodeAsync(dto.LastCode, dto.Email);
@@ -36,8 +48,7 @@ namespace ChatAll.Controllers.Auth
             }
 
 
-
-            return BadRequest(new { message = "Verification failed" });
+            return BadRequest(new { message = "Wrong code" });
         }
     }
 }

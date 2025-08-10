@@ -1,4 +1,5 @@
-﻿using ChatAll.Application.Interfaces;
+﻿using ChatAll.Application.Dtos;
+using ChatAll.Application.Interfaces;
 using ChatAll.Domain.Entities;
 using ChatAll.Infraestructure.DbData;
 using Microsoft.EntityFrameworkCore;
@@ -64,6 +65,29 @@ namespace ChatAll.Infraestructure.Services
                 return true;
             }
             return false;
+        }
+
+
+        public async Task<LoginResponse> LoginAsync(LoginRequest request)
+        {
+
+            string emailTrimmed = request.email.Trim().ToLower();
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == emailTrimmed && u.Password == request.password);
+
+            if (user != null)
+            {
+                return new LoginResponse
+                {
+                    email = user.Email,
+                    firstName = user.FirstName
+                };
+            } else
+            {
+                throw new Exception("Invalid email or password");
+            }
+            
         }
     }
 }
