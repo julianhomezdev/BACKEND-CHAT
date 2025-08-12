@@ -71,17 +71,17 @@ namespace ChatAll.Infraestructure.Services
         public async Task<LoginResponse> LoginAsync(LoginRequest request)
         {
 
-            string emailTrimmed = request.email.Trim().ToLower();
+            string emailTrimmed = request.Email.Trim().ToLower();
 
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == emailTrimmed && u.Password == request.password);
+                .FirstOrDefaultAsync(u => u.Email == emailTrimmed && u.Password == request.Password);
 
             if (user != null)
             {
                 return new LoginResponse
                 {
-                    email = user.Email,
-                    firstName = user.FirstName
+                    Email = user.Email,
+                    FirstName = user.FirstName
                 };
             } else
             {

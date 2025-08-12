@@ -34,7 +34,7 @@ namespace ChatAll.Controllers.Auth
         }
 
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task <IActionResult> Register([FromBody] RegisterRequest request)
         {
 
@@ -72,6 +72,7 @@ namespace ChatAll.Controllers.Auth
 
                 {
                     FirstName = request.FirstName,
+                    Password = request.Password,
                     LastName = request.LastName,
                     Email = request.Email,
                     Phone = request.Phone,

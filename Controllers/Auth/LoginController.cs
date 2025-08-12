@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ChatAll.Controllers.Auth
 {
+    [ApiController]
     [Route("api/[controller]")]
 
     // ControllerBase -> Is a base class in ASP.NET Core that provides the fundamental functionality for handling HTTP requests
@@ -25,11 +26,11 @@ namespace ChatAll.Controllers.Auth
             _logger = logger;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         // [FromBody] Takes the JSON and convert in a LoginRequest instance(request.email, request.password)
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var response = await _userService.LoginAsync(request.email, request.password);
+            var response = await _userService.LoginAsync(request);
 
             if (response != null)
             {
