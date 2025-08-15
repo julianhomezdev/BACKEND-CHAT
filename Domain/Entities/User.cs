@@ -43,6 +43,11 @@ namespace ChatAll.Domain.Entities
         // Last 4 digit code for email verification
         public int LastCode { get; set; } = 0;
 
+        public string Description { get; set; }
+
+        public string ProfilePhotoUrl { get; set; }
+
+
 
     }
 }

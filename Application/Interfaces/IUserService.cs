@@ -24,5 +24,8 @@ namespace ChatAll.Application.Interfaces
 
         // Login a user with email and password
         Task<LoginResponse> LoginAsync(LoginRequest request);
+
+        // Service to update the main profile information
+        Task<bool> UpdateProfile(ProfileSetRequest request);
     }
 }
