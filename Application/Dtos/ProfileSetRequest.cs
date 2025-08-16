@@ -8,5 +8,6 @@
         public string ProfilePhotoUrl { get; set; } 
 
         public string Email { get; set; }
+
     }
 }

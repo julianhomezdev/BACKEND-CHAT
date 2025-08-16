@@ -18,8 +18,8 @@ namespace ChatAll.Controllers.UserUpdates
 
         public UpdateProfileController (IUserService userService, ILogger<UpdateProfileController> logger)
         {
-            userService = _userService;
-            logger = _logger;
+            _userService = userService;
+            _logger = logger;
         }
 
         [HttpPost]
