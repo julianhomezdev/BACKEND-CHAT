@@ -89,5 +89,28 @@ namespace ChatAll.Infraestructure.Services
             }
             
         }
+
+
+        public async Task<bool> UpdateProfile(ProfileSetRequest request)
+        {
+            string emailTrimmed = request.Email;
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == emailTrimmed);
+
+            if (user != null) { 
+            
+                user.ProfilePhotoUrl = request.ProfilePhotoUrl;
+                user.Description = request.Description;
+
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+
+
+            return false;
+        }
     }
 }
