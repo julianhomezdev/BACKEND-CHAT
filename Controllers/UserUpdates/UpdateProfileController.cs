@@ -1,8 +1,8 @@
 ﻿using ChatAll.Application.Dtos;
 using ChatAll.Application.Interfaces;
-using ChatAll.Controllers.Auth;
+using ChatAll.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-
+using System.ComponentModel.DataAnnotations;
 namespace ChatAll.Controllers.UserUpdates
 {
 
@@ -18,22 +18,40 @@ namespace ChatAll.Controllers.UserUpdates
 
         public UpdateProfileController (IUserService userService, ILogger<UpdateProfileController> logger)
         {
-            userService = _userService;
-            logger = _logger;
+            _userService = userService;
+            _logger = logger;
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProfile([FromBody] ProfileSetRequest request)
+        // The front sends a Form not a body, thats why FromForm
+        public async Task<IActionResult> UpdateProfile([FromForm] ProfileSetRequest request)
         {
-            var result = await _userService.UpdateProfile (request);
-
-            if (result)
+            try
             {
-                return Ok(new { message = "Profile updated" });
+                var result = await _userService.UpdateProfile(request);
+                return Ok(new { message = "Profile updated successfully" });
             }
 
+            catch (Domain.Exceptions.ValidationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
-            return BadRequest(new { message = "Update failed" });
+            catch(NotFoundException ex)
+            {
+
+                return BadRequest(new {message = ex.Message});
+            }
+
+            catch(FileValidationException ex)
+            {
+                return BadRequest(new { message = ex.Message});
+            }
+
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal error" });
+            }
         }
     }
 }

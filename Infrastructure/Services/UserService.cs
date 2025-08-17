@@ -1,6 +1,7 @@
 ﻿using ChatAll.Application.Dtos;
 using ChatAll.Application.Interfaces;
 using ChatAll.Domain.Entities;
+using ChatAll.Domain.Exceptions;
 using ChatAll.Infraestructure.DbData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -93,24 +94,53 @@ namespace ChatAll.Infraestructure.Services
 
         public async Task<bool> UpdateProfile(ProfileSetRequest request)
         {
-            string emailTrimmed = request.Email;
+
+
+            // Validate the file
+            if (request.File == null || request.File.Length == 0)
+                throw new FileValidationException("No file uploaded");
+
+
+            // Validate the email
+            if (string.IsNullOrEmpty(request.Email))
+                throw new ValidationException("The email is required");
+            
+            // Remove spaces
+            string emailTrimmed = request.Email.Trim();
 
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == emailTrimmed);
 
-            if (user != null) { 
-            
-                user.ProfilePhotoUrl = request.ProfilePhotoUrl;
-                user.Description = request.Description;
-
-                _context.Users.Update(user);
-                await _context.SaveChangesAsync();
-
-                return true;
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
             }
 
 
-            return false;
+
+            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+            if(!Directory.Exists(uploadsPath))
+                Directory.CreateDirectory(uploadsPath);
+
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(request.File.FileName)}";
+            var filePath = Path.Combine(uploadsPath, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await request.File.CopyToAsync(stream);
+            }
+
+
+            user.ProfilePhotoUrl = $"/uploads/{uniqueFileName}";
+            user.Description = request.Description;
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return true;
+            
+
         }
     }
 }
