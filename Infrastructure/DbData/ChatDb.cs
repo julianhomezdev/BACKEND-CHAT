@@ -12,6 +12,11 @@ namespace ChatAll.Infraestructure.DbData
 
         // Dbsets represents the tables
         public DbSet<User> Users { get; set; }
+        //public DbSet<Email> Emails { get; set; }
+        public DbSet<ConversationType> ConversationTypes { get; set; }
+
+        public DbSet<Conversation> Conversations { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,7 +25,18 @@ namespace ChatAll.Infraestructure.DbData
             // Unique email
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
-                .IsUnique();    
+                .IsUnique();
+
+            // Fk config
+            // Table conversations with a fk to ConversationTypes
+            modelBuilder.Entity<Conversation>()
+                .HasOne(c => c.ConversationType)
+                .WithMany()
+                .HasForeignKey(c => c.ConversationTypeId);
+
+           
+            
+          
         }
     }
 }
