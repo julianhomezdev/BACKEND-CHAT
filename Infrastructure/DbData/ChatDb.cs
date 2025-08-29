@@ -17,6 +17,11 @@ namespace ChatAll.Infraestructure.DbData
 
         public DbSet<Conversation> Conversations { get; set; }
 
+        public DbSet<ConversationMember> ConversationMembers { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +39,25 @@ namespace ChatAll.Infraestructure.DbData
                 .WithMany()
                 .HasForeignKey(c => c.ConversationTypeId);
 
+            modelBuilder.Entity<ConversationMember>()
+                .HasOne(cm => cm.Conversation)
+                .WithMany()
+                .HasForeignKey(cm => cm.ConversationId);
+
+            modelBuilder.Entity<ConversationMember>()
+                .HasOne(cm => cm.User)
+                .WithMany()
+                .HasForeignKey(cm => cm.UserId);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Conversation)
+                .WithMany()
+                .HasForeignKey(m => m.ConversationId);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany()
+                .HasForeignKey(m => m.SenderId);
            
             
           
